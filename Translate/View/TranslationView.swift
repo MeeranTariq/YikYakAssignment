@@ -2,7 +2,7 @@ import SwiftUI
 
 
 struct TranslationView: View {
-
+    
     @State private var selectedLanguage: Language = Language(id: "en", name: "English")
     @State private var inputText: String = ""
     @StateObject private var viewModel = TranslationViewModel()
@@ -28,6 +28,9 @@ struct TranslationView: View {
                         else {
                             Text("Loading languages...").padding()
                         }
+                    }.onAppear() {
+                        // fetch languages
+                        viewModel.fetchAvailableLanguages()
                     }
                 }.listStyle(InsetGroupedListStyle())
                 
@@ -36,9 +39,16 @@ struct TranslationView: View {
         }
     }
     
+    // Note: Some actual text from different language is not being detected by the API
     func translate() {
-        print("Not implemented")
-        // TODO: you will need to implement this
+        // detect language of entered text
+        viewModel.detectLanguage(for: inputText, completion: { lan in
+            // translate text
+            viewModel.translate(
+                text: inputText,
+                from: lan ?? "en",
+                to: selectedLanguage.id)
+        })
     }
 }
 
