@@ -7,6 +7,15 @@
 
 import Foundation
 
+/**
+ * ```
+ * General function to make network request to API endpoint on server
+ * ```
+ * - to: Server endpoint
+ * - method: HTTP method
+ * - params: (Optional) query params
+ * - completion: closure to perfrom any front-end task when request is completed
+ */
 func makeRequest(to endPoint: String, method: String,
                  params: [URLQueryItem]? = nil, completion: @escaping (Data) -> ()) {
     

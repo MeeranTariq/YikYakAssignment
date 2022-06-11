@@ -6,6 +6,11 @@ class TranslationViewModel: ObservableObject {
     @Published var translatedText: String = String()
     
     
+    /**
+     * ```
+     * Fetch the list of supported languages for translations
+     * ```
+     */
     func fetchAvailableLanguages() {
         makeRequest(to: Endpoint.languages, method: "GET", completion: { (data) in
             do {
@@ -18,6 +23,13 @@ class TranslationViewModel: ObservableObject {
         })
     }
     
+    /**
+     * ```
+     * Detect the language of text from the supported languages
+     * ```
+     * - for: text to detect
+     * - completion: closure to perfrom any front-end task when request is completed
+     */
     func detectLanguage(for text: String, completion: @escaping (String?) -> ()) {
         makeRequest(
             to: Endpoint.detect,
@@ -39,6 +51,14 @@ class TranslationViewModel: ObservableObject {
             })
     }
     
+    /**
+     * ```
+     * Translate text from one language to another
+     * ```
+     * - text: text to translate
+     * - from: language to translate from
+     * - to: language to translate to
+     */
     func translate(text: String, from: String, to: String) {
         
         makeRequest(
